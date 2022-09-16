@@ -145,6 +145,7 @@ export default function UserList() {
         // }])
         axios.get('http://localhost:5000/users?_expand=role').then((res) => {
           let list = res.data
+          console.log(list , list.filter((item) => item.id === 2))
           setUserList(list)
         })
       })
@@ -206,7 +207,8 @@ export default function UserList() {
   return (
     <div>
       <Button type='primary' onClick={() => { setIsVisible(true) }}>添加用户</Button>
-      <Table dataSource={userList} columns={columns} pagination={{ pageSize: 5 }} rowKey={(item) => item.id} />;
+      {/* 之前这里的rowKey使用的是：(item) => item.id 但是在输出后并没有发现key不唯一，但是一直报警告，所以随机生成吧*/}
+      <Table dataSource={userList} columns={columns} pagination={{ pageSize: 5 }}  rowKey={Math.random} />;
       {/* 添加用户的表单 */}
       <Modal
         visible={isVisible}
